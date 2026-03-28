@@ -3,41 +3,54 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TecnicoResource\Pages;
-use App\Filament\Resources\TecnicoResource\RelationManagers;
 use App\Models\Tecnico;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class TecnicoResource extends Resource
 {
     protected static ?string $model = Tecnico::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-wrench-screwdriver';
     protected static ?string $navigationLabel = 'Técnicos';
     protected static ?string $modelLabel = 'Técnico';
     protected static ?string $pluralModelLabel = 'Técnicos';
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('nombre')
-                    ->required(),
-                Forms\Components\TextInput::make('rut'),
-                Forms\Components\TextInput::make('telefono')
-                    ->tel(),
-                Forms\Components\TextInput::make('email')
-                    ->email(),
-                Forms\Components\Textarea::make('observaciones')
-                    ->columnSpanFull(),
-                Forms\Components\Toggle::make('activo')
-                    ->required(),
-            ]);
+        return $form->schema([
+            Forms\Components\Section::make('Información del técnico')
+                ->schema([
+                    Forms\Components\TextInput::make('nombre')
+                        ->label('Nombre completo')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('rut')
+                        ->label('RUT')
+                        ->unique(ignoreRecord: true)
+                        ->maxLength(12)
+                        ->placeholder('12.345.678-9'),
+                    Forms\Components\TextInput::make('telefono')
+                        ->label('Teléfono')
+                        ->tel()
+                        ->maxLength(20)
+                        ->placeholder('+56 9 1234 5678'),
+                    Forms\Components\TextInput::make('email')
+                        ->label('Correo electrónico')
+                        ->email()
+                        ->maxLength(255),
+                    Forms\Components\Toggle::make('activo')
+                        ->label('Técnico activo')
+                        ->default(true),
+                    Forms\Components\Textarea::make('observaciones')
+                        ->label('Observaciones')
+                        ->maxLength(500)
+                        ->columnSpanFull(),
+                ])->columns(2),
+        ]);
     }
 
     public static function table(Table $table): Table
@@ -45,29 +58,29 @@ class TecnicoResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('nombre')
-                    ->searchable(),
+                    ->label('Nombre')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('rut')
+                    ->label('RUT')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('telefono')
+                    ->label('Teléfono')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
+                    ->label('Correo')
                     ->searchable(),
                 Tables\Columns\IconColumn::make('activo')
+                    ->label('Activo')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\TernaryFilter::make('activo')
+                    ->label('Activo'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -76,19 +89,12 @@ class TecnicoResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListTecnicos::route('/'),
+            'index'  => Pages\ListTecnicos::route('/'),
             'create' => Pages\CreateTecnico::route('/create'),
-            'edit' => Pages\EditTecnico::route('/{record}/edit'),
+            'edit'   => Pages\EditTecnico::route('/{record}/edit'),
         ];
     }
 }
