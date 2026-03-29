@@ -13,6 +13,7 @@ class OrdenTrabajoController extends Controller
             'cliente',
             'direccion',
             'tecnicos',
+            'ayudantes',
             'materiales.material',
         ]);
 

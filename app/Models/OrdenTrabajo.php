@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\Ayudante;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -45,5 +45,9 @@ class OrdenTrabajo extends Model
     public function materiales(): HasMany
     {
         return $this->hasMany(OtMaterial::class, 'orden_trabajo_id');
+    }
+    public function ayudantes(): BelongsToMany
+    {
+    return $this->belongsToMany(Ayudante::class, 'ot_ayudantes', 'orden_trabajo_id', 'ayudante_id');
     }
 }

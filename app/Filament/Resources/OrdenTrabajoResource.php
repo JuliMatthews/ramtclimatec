@@ -94,15 +94,21 @@ Forms\Components\Section::make('Servicio')
                         ->native(false),
                 ])->columns(2),
 
-            Forms\Components\Section::make('Técnicos asignados')
-                ->schema([
-                    Forms\Components\Select::make('tecnicos')
-                        ->label('Técnicos')
-                        ->relationship('tecnicos', 'nombre')
-                        ->multiple()
-                        ->preload()
-                        ->searchable(),
-                ]),
+            Forms\Components\Section::make('Personal asignado')
+    ->schema([
+        Forms\Components\Select::make('tecnicos')
+            ->label('Técnicos')
+            ->relationship('tecnicos', 'nombre')
+            ->multiple()
+            ->preload()
+            ->searchable(),
+        Forms\Components\Select::make('ayudantes')
+            ->label('Ayudantes')
+            ->relationship('ayudantes', 'nombre')
+            ->multiple()
+            ->preload()
+            ->searchable(),
+    ])->columns(2),
 
             Forms\Components\Section::make('Descripción y observaciones')
                 ->schema([
@@ -188,15 +194,32 @@ Forms\Components\Section::make('Servicio')
                     ]),
             ])
             ->actions([
-                Tables\Actions\Action::make('pdf')
-                    ->label('PDF')
-                    ->icon('heroicon-o-document-arrow-down')
-                    ->color('success')
-                    ->url(fn(OrdenTrabajo $record) => route('ot.pdf', $record))
-                    ->openUrlInNewTab(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ])
+    Tables\Actions\Action::make('pdf')
+        ->label('PDF')
+        ->icon('heroicon-o-document-arrow-down')
+        ->color('success')
+        ->url(fn(OrdenTrabajo $record) => route('ot.pdf', $record))
+        ->openUrlInNewTab(),
+    Tables\Actions\Action::make('enviar_correo')
+        ->label('Enviar')
+        ->icon('heroicon-o-envelope')
+        ->color('info')
+        ->requiresConfirmation()
+        ->modalHeading('Enviar OT por correo')
+        ->modalDescription('¿Deseas enviar esta Orden de Trabajo a contacto@ramtclimatec.cl?')
+        ->modalSubmitActionLabel('Sí, enviar')
+        ->action(function (OrdenTrabajo $record) {
+            \Illuminate\Support\Facades\Mail::to('contacto@ramtclimatec.cl')
+                ->send(new \App\Mail\OrdenTrabajoMail($record));
+
+            \Filament\Notifications\Notification::make()
+                ->title('Correo enviado correctamente')
+                ->success()
+                ->send();
+        }),
+    Tables\Actions\EditAction::make(),
+    Tables\Actions\DeleteAction::make(),
+])
             ->defaultSort('id', 'desc');
     }
 
