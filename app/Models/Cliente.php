@@ -20,6 +20,7 @@ class Cliente extends Model
     'telefono',
     'observaciones',
     'activo',
+    'proxima_mantencion'
 ];
 
     protected $casts = [

@@ -69,6 +69,11 @@ class ClienteResource extends Resource
                         ->label('Observaciones')
                         ->maxLength(500)
                         ->columnSpanFull(),
+                    Forms\Components\DatePicker::make('proxima_mantencion')
+                        ->label('Próxima Mantención')
+                        ->nullable()
+                        ->displayFormat('d/m/Y')
+                        ->native(false),    
                 ])->columns(2),
         ]);
     }
