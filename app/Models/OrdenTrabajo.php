@@ -14,6 +14,7 @@ class OrdenTrabajo extends Model
         'cliente_id',
         'direccion_id',
         'tipo_servicio',
+        'cantidad_equipos',
         'estado',
         'descripcion',
         'fecha_inicio',

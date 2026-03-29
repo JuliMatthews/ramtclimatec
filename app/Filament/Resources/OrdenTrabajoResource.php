@@ -26,52 +26,63 @@ class OrdenTrabajoResource extends Resource
     {
         return $form->schema([
             Forms\Components\Section::make('Información general')
-                ->schema([
-                    Forms\Components\Select::make('cliente_id')
-                        ->label('Cliente')
-                        ->relationship('cliente', 'nombre')
-                        ->searchable()
-                        ->preload()
-                        ->required()
-                        ->live()
-                        ->afterStateUpdated(fn($state, Forms\Set $set) => $set('direccion_id', null)),
-                    Forms\Components\Select::make('direccion_id')
-                        ->label('Dirección')
-                        ->required()
-                        ->options(function (Get $get) {
-                            $clienteId = $get('cliente_id');
-                            if (!$clienteId) return [];
-                            return Direccion::where('cliente_id', $clienteId)
-                                ->get()
-                                ->mapWithKeys(fn($d) => [
-                                    $d->id => "{$d->calle} {$d->numero}, {$d->comuna}"
-                                ]);
-                        })
-                        ->live()
-                        ->searchable(),
-                    Forms\Components\Select::make('tipo_servicio')
-                        ->label('Tipo de servicio')
-                        ->options([
-                            'primera_visita' => 'Primera visita (Gratis)',
-                            'instalacion'    => 'Instalación',
-                            'mantencion'     => 'Mantención',
-                            'reparacion'     => 'Reparación',
-                            'diagnostico'    => 'Diagnóstico',
-                            'garantia'       => 'Garantía',
-                        ])
-                        ->default('primera_visita')
-                        ->required(),
-                    Forms\Components\Select::make('estado')
-                        ->label('Estado')
-                        ->options([
-                            'pendiente'    => 'Pendiente',
-                            'en_progreso'  => 'En progreso',
-                            'completada'   => 'Completada',
-                            'cancelada'    => 'Cancelada',
-                        ])
-                        ->default('pendiente')
-                        ->required(),
-                ])->columns(2),
+    ->schema([
+        Forms\Components\Select::make('cliente_id')
+            ->label('Cliente')
+            ->relationship('cliente', 'nombre')
+            ->searchable()
+            ->preload()
+            ->required()
+            ->live()
+            ->afterStateUpdated(fn($state, Forms\Set $set) => $set('direccion_id', null)),
+        Forms\Components\Select::make('direccion_id')
+            ->label('Dirección')
+            ->required()
+            ->options(function (Get $get) {
+                $clienteId = $get('cliente_id');
+                if (!$clienteId) return [];
+                return Direccion::where('cliente_id', $clienteId)
+                    ->get()
+                    ->mapWithKeys(fn($d) => [
+                        $d->id => "{$d->calle} {$d->numero}, {$d->comuna}"
+                    ]);
+            })
+            ->live()
+            ->searchable(),
+    ])->columns(2),
+
+Forms\Components\Section::make('Servicio')
+    ->schema([
+        Forms\Components\Select::make('tipo_servicio')
+            ->label('Tipo de servicio')
+            ->options([
+                'primera_visita' => 'Primera visita (Gratis)',
+                'instalacion'    => 'Instalación',
+                'mantencion'     => 'Mantención',
+                'reparacion'     => 'Reparación',
+                'diagnostico'    => 'Diagnóstico',
+                'garantia'       => 'Garantía',
+            ])
+            ->default('primera_visita')
+            ->required(),
+        Forms\Components\TextInput::make('cantidad_equipos')
+            ->label('Cantidad de equipos')
+            ->numeric()
+            ->default(1)
+            ->minValue(1)
+            ->maxValue(99)
+            ->step(1),
+        Forms\Components\Select::make('estado')
+            ->label('Estado')
+            ->options([
+                'pendiente'   => 'Pendiente',
+                'en_progreso' => 'En progreso',
+                'completada'  => 'Completada',
+                'cancelada'   => 'Cancelada',
+            ])
+            ->default('pendiente')
+            ->required(),
+    ])->columns(3),
 
             Forms\Components\Section::make('Fechas')
                 ->schema([
@@ -177,13 +188,14 @@ class OrdenTrabajoResource extends Resource
                     ]),
             ])
             ->actions([
+                Tables\Actions\Action::make('pdf')
+                    ->label('PDF')
+                    ->icon('heroicon-o-document-arrow-down')
+                    ->color('success')
+                    ->url(fn(OrdenTrabajo $record) => route('ot.pdf', $record))
+                    ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
             ])
             ->defaultSort('id', 'desc');
     }
