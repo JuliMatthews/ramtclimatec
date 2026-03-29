@@ -2,30 +2,30 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\TecnicoResource\Pages;
+use App\Filament\Resources\AyudanteResource\Pages;
 use App\Filament\Traits\TieneUbicacion;
-use App\Models\Tecnico;
+use App\Models\Ayudante;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class TecnicoResource extends Resource
+class AyudanteResource extends Resource
 {
     use TieneUbicacion;
 
-    protected static ?string $model = Tecnico::class;
-    protected static ?string $navigationIcon = 'heroicon-o-wrench-screwdriver';
-    protected static ?string $navigationLabel = 'Técnicos';
-    protected static ?string $modelLabel = 'Técnico';
-    protected static ?string $pluralModelLabel = 'Técnicos';
-    protected static ?int $navigationSort = 4;
+    protected static ?string $model = Ayudante::class;
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static ?string $navigationLabel = 'Ayudantes';
+    protected static ?string $modelLabel = 'Ayudante';
+    protected static ?string $pluralModelLabel = 'Ayudantes';
+    protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Forms\Components\Section::make('Información del técnico')
+            Forms\Components\Section::make('Información del ayudante')
                 ->schema([
                     Forms\Components\TextInput::make('nombre')
                         ->label('Nombre completo')
@@ -46,7 +46,7 @@ class TecnicoResource extends Resource
                         ->email()
                         ->maxLength(255),
                     Forms\Components\Toggle::make('activo')
-                        ->label('Técnico activo')
+                        ->label('Ayudante activo')
                         ->default(true),
                 ])->columns(2),
 
@@ -104,9 +104,9 @@ class TecnicoResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListTecnicos::route('/'),
-            'create' => Pages\CreateTecnico::route('/create'),
-            'edit'   => Pages\EditTecnico::route('/{record}/edit'),
+            'index'  => Pages\ListAyudantes::route('/'),
+            'create' => Pages\CreateAyudante::route('/create'),
+            'edit'   => Pages\EditAyudante::route('/{record}/edit'),
         ];
     }
 }

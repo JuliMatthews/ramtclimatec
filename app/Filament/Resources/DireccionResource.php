@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\DireccionResource\Pages;
+use App\Filament\Traits\TieneUbicacion;
 use App\Models\Direccion;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -12,6 +13,8 @@ use Filament\Tables\Table;
 
 class DireccionResource extends Resource
 {
+    use TieneUbicacion;
+
     protected static ?string $model = Direccion::class;
     protected static ?string $navigationIcon = 'heroicon-o-map-pin';
     protected static ?string $navigationLabel = 'Direcciones';
@@ -43,23 +46,19 @@ class DireccionResource extends Resource
                     Forms\Components\TextInput::make('depto')
                         ->label('Depto / Oficina')
                         ->maxLength(50),
-                    Forms\Components\TextInput::make('comuna')
-                        ->label('Comuna')
-                        ->required()
-                        ->maxLength(100),
-                    Forms\Components\TextInput::make('ciudad')
-                        ->label('Ciudad')
-                        ->default('Santiago')
-                        ->maxLength(100),
-                    Forms\Components\TextInput::make('region')
-                        ->label('Región')
-                        ->default('Metropolitana')
-                        ->maxLength(100),
+                ])->columns(2),
+
+            Forms\Components\Section::make('Ubicación')
+                ->schema(self::camposUbicacion())
+                ->columns(3),
+
+            Forms\Components\Section::make('Referencia')
+                ->schema([
                     Forms\Components\Textarea::make('referencia')
-                        ->label('Referencia')
+                        ->label('Referencia / Indicaciones')
                         ->maxLength(500)
                         ->columnSpanFull(),
-                ])->columns(2),
+                ]),
         ]);
     }
 
@@ -76,17 +75,18 @@ class DireccionResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('numero')
                     ->label('Número'),
+                Tables\Columns\TextColumn::make('region')
+                    ->label('Región')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('provincia')
+                    ->label('Provincia')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('comuna')
                     ->label('Comuna')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('ciudad')
-                    ->label('Ciudad'),
                 Tables\Columns\IconColumn::make('principal')
                     ->label('Principal')
                     ->boolean(),
-            ])
-            ->filters([
-                //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

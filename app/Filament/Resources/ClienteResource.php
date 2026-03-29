@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ClienteResource\Pages;
+use App\Filament\Traits\TieneUbicacion;
 use App\Models\Cliente;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -12,6 +13,8 @@ use Filament\Tables\Table;
 
 class ClienteResource extends Resource
 {
+    use TieneUbicacion;
+
     protected static ?string $model = Cliente::class;
     protected static ?string $navigationIcon = 'heroicon-o-users';
     protected static ?string $navigationLabel = 'Clientes';
@@ -37,8 +40,8 @@ class ClienteResource extends Resource
                     Forms\Components\Select::make('tipo')
                         ->label('Tipo')
                         ->options([
-                            'persona'  => 'Persona natural',
-                            'empresa'  => 'Empresa',
+                            'persona' => 'Persona natural',
+                            'empresa' => 'Empresa',
                         ])
                         ->default('persona')
                         ->required(),
@@ -46,6 +49,10 @@ class ClienteResource extends Resource
                         ->label('Cliente activo')
                         ->default(true),
                 ])->columns(2),
+
+            Forms\Components\Section::make('Ubicación')
+                ->schema(self::camposUbicacion())
+                ->columns(3),
 
             Forms\Components\Section::make('Contacto')
                 ->schema([
@@ -83,6 +90,12 @@ class ClienteResource extends Resource
                         'primary' => 'persona',
                         'warning' => 'empresa',
                     ]),
+                Tables\Columns\TextColumn::make('region')
+                    ->label('Región')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('comuna')
+                    ->label('Comuna')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->label('Correo')
                     ->searchable(),

@@ -10,16 +10,17 @@ class Direccion extends Model
 {
     protected $table = 'direcciones';
     protected $fillable = [
-        'cliente_id',
-        'calle',
-        'numero',
-        'depto',
-        'comuna',
-        'ciudad',
-        'region',
-        'referencia',
-        'principal',
-    ];
+    'cliente_id',
+    'calle',
+    'numero',
+    'depto',
+    'region',
+    'provincia',
+    'comuna',
+    'ciudad',
+    'referencia',
+    'principal',
+];
 
     protected $casts = [
         'principal' => 'boolean',
