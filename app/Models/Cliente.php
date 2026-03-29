@@ -36,4 +36,8 @@ class Cliente extends Model
     {
         return $this->hasMany(OrdenTrabajo::class);
     }
+    public function presupuestos()
+{
+    return $this->hasMany(Presupuesto::class, 'cliente_id');
+}
 }

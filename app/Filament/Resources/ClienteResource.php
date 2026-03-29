@@ -10,6 +10,10 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use App\Models\Presupuesto;
+use Filament\Infolists;
+use Filament\Tables\Actions\Action;
+use Illuminate\Support\Facades\Storage;
 
 class ClienteResource extends Resource
 {
@@ -132,7 +136,12 @@ class ClienteResource extends Resource
                 ]),
             ]);
     }
-
+    public static function getRelations(): array
+{
+    return [
+        \App\Filament\Resources\ClienteResource\RelationManagers\PresupuestosRelationManager::class,
+    ];
+}
     public static function getPages(): array
     {
         return [
