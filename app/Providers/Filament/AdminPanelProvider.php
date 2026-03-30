@@ -25,7 +25,7 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path('admin')
+            ->path('panel')
             ->login()
             ->brandName('Ramtclimatec')
             ->brandLogo('https://ramtclimatec.cl/wp-content/uploads/2026/03/logo_FT_2.png')
