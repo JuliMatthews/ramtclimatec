@@ -35,4 +35,8 @@ class Direccion extends Model
     {
         return $this->hasMany(OrdenTrabajo::class);
     }
+    public function equipos(): HasMany
+    {
+    return $this->hasMany(Equipo::class);
+    }
 }

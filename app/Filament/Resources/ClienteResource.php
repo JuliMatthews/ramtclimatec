@@ -86,9 +86,9 @@ class ClienteResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('rut')
-                    ->label('RUT')
-                    ->searchable(),
+                //Tables\Columns\TextColumn::make('rut')
+                    //->label('RUT')
+                    //->searchable(),
                 Tables\Columns\TextColumn::make('nombre')
                     ->label('Nombre')
                     ->searchable()
@@ -110,6 +110,11 @@ class ClienteResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('telefono')
                     ->label('Teléfono'),
+                Tables\Columns\TextColumn::make('equipos_count')
+                    ->label('Equipos')
+                    ->counts('equipos')
+                    ->sortable()
+                    ->alignCenter(),
                 Tables\Columns\IconColumn::make('activo')
                     ->label('Activo')
                     ->boolean(),
