@@ -45,6 +45,9 @@ class ListEquiposCliente extends Page implements HasTable
                 Tables\Columns\TextColumn::make('modelo')
                     ->label('Modelo')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('capacidad_enfriamiento_btu')
+                    ->label('BTU')
+                    ->searchable(),    
                 Tables\Columns\TextColumn::make('tipo_refrigerante')
                     ->label('Refrigerante'),
                 Tables\Columns\TextColumn::make('ultima_mantencion')
