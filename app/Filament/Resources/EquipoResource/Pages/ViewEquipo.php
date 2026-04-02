@@ -3,20 +3,44 @@
 namespace App\Filament\Resources\EquipoResource\Pages;
 
 use App\Filament\Resources\EquipoResource;
+use App\Models\Equipo;
+use Filament\Actions\Action;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\IconEntry;
+use Illuminate\Database\Eloquent\Model;
 
 class ViewEquipo extends ViewRecord
 {
     protected static string $resource = EquipoResource::class;
 
+    protected function resolveRecord($key): Model
+    {
+        return Equipo::query()->findOrFail($key);
+    }
+
+    public function getTitle(): string
+    {
+        return "Ficha Técnica: {$this->record->ubicacion}";
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Action::make('descargar_pdf')
+                ->label('PDF')
+                ->color('danger')
+                ->icon('heroicon-o-document-arrow-down')
+                ->url(fn () => route('equipo.pdf', $this->record))
+                ->openUrlInNewTab(),
+        ];
+    }
+
     public function infolist(Infolist $infolist): Infolist
     {
         return $infolist->schema([
-
             Section::make('Vinculación')
                 ->schema([
                     TextEntry::make('cliente.nombre')->label('Cliente'),
@@ -58,7 +82,6 @@ class ViewEquipo extends ViewRecord
                     TextEntry::make('proxima_mantencion')->label('Próxima mantención')->date('d/m/Y'),
                     TextEntry::make('observaciones')->label('Observaciones')->columnSpanFull(),
                 ])->columns(2),
-
         ]);
     }
 }

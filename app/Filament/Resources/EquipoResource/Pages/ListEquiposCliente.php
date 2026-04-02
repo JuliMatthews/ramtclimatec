@@ -69,7 +69,7 @@ class ListEquiposCliente extends Page implements HasTable
                     ->label('Ver Ficha')
                     ->icon('heroicon-o-document-text')
                     ->color('info')
-                    ->url(fn (Equipo $record) => route('filament.admin.resources.equipos.view', $record)),
+                    ->url(fn (Equipo $record) => route('filament.admin.resources.equipos.view', ['record' => $record->id])),
                 Tables\Actions\Action::make('edit')
                     ->label('Editar')
                     ->icon('heroicon-o-pencil')
