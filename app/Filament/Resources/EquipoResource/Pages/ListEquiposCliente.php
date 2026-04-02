@@ -2,15 +2,17 @@
 
 namespace App\Filament\Resources\EquipoResource\Pages;
 
+use App\Exports\EquiposPorClienteExport;
 use App\Filament\Resources\EquipoResource;
 use App\Models\Cliente;
 use App\Models\Equipo;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
 use Filament\Tables;
-use Filament\Tables\Table;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Table;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ListEquiposCliente extends Page implements HasTable
 {
@@ -47,7 +49,7 @@ class ListEquiposCliente extends Page implements HasTable
                     ->searchable(),
                 Tables\Columns\TextColumn::make('capacidad_enfriamiento_btu')
                     ->label('BTU')
-                    ->searchable(),    
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('tipo_refrigerante')
                     ->label('Refrigerante'),
                 Tables\Columns\TextColumn::make('ultima_mantencion')
@@ -67,20 +69,43 @@ class ListEquiposCliente extends Page implements HasTable
                     ->label('Ver Ficha')
                     ->icon('heroicon-o-document-text')
                     ->color('info')
-                    ->url(fn(Equipo $record) => route('filament.admin.resources.equipos.view', $record)),
+                    ->url(fn (Equipo $record) => route('filament.admin.resources.equipos.view', $record)),
                 Tables\Actions\Action::make('edit')
                     ->label('Editar')
                     ->icon('heroicon-o-pencil')
                     ->color('warning')
-                    ->url(fn(Equipo $record) => route('filament.admin.resources.equipos.edit', $record)),
+                    ->url(fn (Equipo $record) => route('filament.admin.resources.equipos.edit', $record)),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->headerActions([
-                Tables\Actions\Action::make('crear_equipo')
+                // BOTÓN XLSX (Lo ponemos primero para que aparezca a la izquierda de Agregar)
+                Tables\Actions\Action::make('exportExcel')
+                    ->label('xlsx')
+                    ->icon('heroicon-o-document-arrow-down')
+                    ->color('success')
+                    ->action(function () {
+                        try {
+                            return Excel::download(
+                                new EquiposPorClienteExport($this->record->id),
+                                "equipos_{$this->record->nombre}_{$this->record->id}.xlsx"
+                            );
+                        } catch (\Exception $e) {
+                            Notification::make()
+                                ->title('Error al exportar')
+                                ->body('Ocurrió un error: ' . $e->getMessage())
+                                ->danger()
+                                ->send();
+                        }
+                    }),
+
+                // BOTÓN AGREGAR EQUIPO
+                Tables\Actions\Action::make('crearEquipo')
                     ->label('Agregar Equipo')
                     ->icon('heroicon-o-plus')
                     ->color('primary')
-                    ->url(route('filament.admin.resources.equipos.create')),
+                    ->url(fn () => route('filament.admin.resources.equipos.create', [
+                        'cliente_id' => $this->record->id,
+                    ])),
             ]);
     }
 }
