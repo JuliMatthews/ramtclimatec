@@ -15,10 +15,9 @@
                 <table class="w-full text-sm text-left divide-y divide-gray-200 dark:divide-white/5">
                     <thead>
                         <tr class="text-xs uppercase text-gray-500 dark:text-gray-400">
+                            <th class="px-4 py-3 font-medium">Equipo</th>
+                            <th class="px-4 py-3 font-medium">Ubicación</th>
                             <th class="px-4 py-3 font-medium">Cliente</th>
-                            <th class="px-4 py-3 font-medium">Tipo</th>
-                            <th class="px-4 py-3 font-medium">Teléfono</th>
-                            <th class="px-4 py-3 font-medium">Correo</th>
                             <th class="px-4 py-3 font-medium">Próxima Mantención</th>
                             <th class="px-4 py-3 font-medium">Días restantes</th>
                             <th class="px-4 py-3 font-medium">Estado</th>
@@ -33,30 +32,42 @@
                                     'proximo' => 'background:#fef9c3;color:#a16207;',
                                     default   => 'background:#dcfce7;color:#15803d;',
                                 };
+
                                 $label = match($cliente->alerta) {
                                     'vencida' => '● Vencida',
                                     'urgente' => '● Urgente',
                                     'proximo' => '● Próximo',
                                     default   => '● Al día',
                                 };
+
                                 $dias = $cliente->dias_restantes;
-                                $diasTexto = $dias < 0 ? abs($dias) . ' días atrás' : ($dias === 0 ? 'Hoy' : $dias . ' días');
-                                $tipoStyle = $cliente->tipo === 'empresa'
-                                    ? 'background:#fff3cd;color:#856404;'
-                                    : 'background:#cfe2ff;color:#084298;';
-                                $tipoLabel = $cliente->tipo === 'empresa' ? 'Empresa' : 'Persona natural';
+
+                                $diasTexto = $dias < 0
+                                    ? abs($dias) . ' días atrás'
+                                    : ($dias === 0 ? 'Hoy' : $dias . ' días');
                             @endphp
+
                             <tr class="text-gray-900 dark:text-gray-100">
-                                <td class="px-4 py-3 font-semibold">{{ $cliente->nombre }}</td>
-                                <td class="px-4 py-3">
-                                    <span style="{{ $tipoStyle }}padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;">
-                                        {{ $tipoLabel }}
-                                    </span>
+                                <td class="px-4 py-3 font-semibold">
+                                    {{ $cliente->equipo_info }}
                                 </td>
-                                <td class="px-4 py-3">{{ $cliente->telefono ?? '—' }}</td>
-                                <td class="px-4 py-3">{{ $cliente->email ?? '—' }}</td>
-                                <td class="px-4 py-3">{{ \Carbon\Carbon::parse($cliente->proxima_mantencion)->format('d/m/Y') }}</td>
-                                <td class="px-4 py-3 font-medium">{{ $diasTexto }}</td>
+
+                                <td class="px-4 py-3">
+                                    {{ $cliente->ubicacion ?? '—' }}
+                                </td>
+
+                                <td class="px-4 py-3">
+                                    {{ $cliente->cliente_nombre }}
+                                </td>
+
+                                <td class="px-4 py-3">
+                                    {{ \Carbon\Carbon::parse($cliente->proxima_mantencion)->format('d/m/Y') }}
+                                </td>
+
+                                <td class="px-4 py-3 font-medium">
+                                    {{ $diasTexto }}
+                                </td>
+
                                 <td class="px-4 py-3">
                                     <span style="{{ $badgeStyle }}padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;">
                                         {{ $label }}
@@ -65,8 +76,8 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="px-4 py-8 text-center text-gray-400 dark:text-gray-500">
-                                    No hay clientes con mantención programada.
+                                <td colspan="6" class="px-4 py-8 text-center text-gray-400 dark:text-gray-500">
+                                    No hay equipos con mantención programada.
                                 </td>
                             </tr>
                         @endforelse
