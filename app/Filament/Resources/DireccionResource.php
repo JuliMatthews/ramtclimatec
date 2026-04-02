@@ -16,10 +16,15 @@ class DireccionResource extends Resource
     use TieneUbicacion;
 
     protected static ?string $model = Direccion::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-map-pin';
+
     protected static ?string $navigationLabel = 'Direcciones';
+
     protected static ?string $modelLabel = 'Dirección';
+
     protected static ?string $pluralModelLabel = 'Direcciones';
+
     protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
@@ -102,9 +107,9 @@ class DireccionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListDireccions::route('/'),
+            'index' => Pages\ListDireccions::route('/'),
             'create' => Pages\CreateDireccion::route('/create'),
-            'edit'   => Pages\EditDireccion::route('/{record}/edit'),
+            'edit' => Pages\EditDireccion::route('/{record}/edit'),
         ];
     }
 }

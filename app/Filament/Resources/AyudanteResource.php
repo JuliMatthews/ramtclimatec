@@ -16,10 +16,15 @@ class AyudanteResource extends Resource
     use TieneUbicacion;
 
     protected static ?string $model = Ayudante::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
+
     protected static ?string $navigationLabel = 'Ayudantes';
+
     protected static ?string $modelLabel = 'Ayudante';
+
     protected static ?string $pluralModelLabel = 'Ayudantes';
+
     protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
@@ -104,9 +109,9 @@ class AyudanteResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListAyudantes::route('/'),
+            'index' => Pages\ListAyudantes::route('/'),
             'create' => Pages\CreateAyudante::route('/create'),
-            'edit'   => Pages\EditAyudante::route('/{record}/edit'),
+            'edit' => Pages\EditAyudante::route('/{record}/edit'),
         ];
     }
 }

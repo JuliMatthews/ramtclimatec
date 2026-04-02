@@ -8,16 +8,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Tecnico extends Model
 {
     protected $fillable = [
-    'nombre',
-    'rut',
-    'telefono',
-    'email',
-    'region',
-    'provincia',
-    'comuna',
-    'observaciones',
-    'activo',
-];
+        'nombre',
+        'rut',
+        'telefono',
+        'email',
+        'region',
+        'provincia',
+        'comuna',
+        'observaciones',
+        'activo',
+    ];
 
     protected $casts = [
         'activo' => 'boolean',

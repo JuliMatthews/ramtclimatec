@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class OtMaterial extends Model
 {
     protected $table = 'ot_materiales';
+
     protected $fillable = [
         'orden_trabajo_id',
         'material_id',
@@ -16,7 +17,7 @@ class OtMaterial extends Model
     ];
 
     protected $casts = [
-        'cantidad'        => 'decimal:2',
+        'cantidad' => 'decimal:2',
         'precio_unitario' => 'decimal:2',
     ];
 

@@ -16,10 +16,15 @@ class TecnicoResource extends Resource
     use TieneUbicacion;
 
     protected static ?string $model = Tecnico::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-wrench-screwdriver';
+
     protected static ?string $navigationLabel = 'Técnicos';
+
     protected static ?string $modelLabel = 'Técnico';
+
     protected static ?string $pluralModelLabel = 'Técnicos';
+
     protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
@@ -104,9 +109,9 @@ class TecnicoResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListTecnicos::route('/'),
+            'index' => Pages\ListTecnicos::route('/'),
             'create' => Pages\CreateTecnico::route('/create'),
-            'edit'   => Pages\EditTecnico::route('/{record}/edit'),
+            'edit' => Pages\EditTecnico::route('/{record}/edit'),
         ];
     }
 }

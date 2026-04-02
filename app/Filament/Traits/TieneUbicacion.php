@@ -13,7 +13,7 @@ trait TieneUbicacion
         return [
             Forms\Components\Select::make('region')
                 ->label('Región')
-                ->options(fn() => array_combine(
+                ->options(fn () => array_combine(
                     array_keys(config('comunas')),
                     array_keys(config('comunas'))
                 ))
@@ -28,8 +28,11 @@ trait TieneUbicacion
                 ->label('Provincia')
                 ->options(function (Get $get) {
                     $region = $get('region');
-                    if (!$region) return [];
+                    if (! $region) {
+                        return [];
+                    }
                     $provincias = config("comunas.{$region}", []);
+
                     return array_combine(
                         array_keys($provincias),
                         array_keys($provincias)
@@ -37,20 +40,23 @@ trait TieneUbicacion
                 })
                 ->searchable()
                 ->live()
-                ->afterStateUpdated(fn(Set $set) => $set('comuna', null))
-                ->disabled(fn(Get $get) => !$get('region')),
+                ->afterStateUpdated(fn (Set $set) => $set('comuna', null))
+                ->disabled(fn (Get $get) => ! $get('region')),
 
             Forms\Components\Select::make('comuna')
                 ->label('Comuna')
                 ->options(function (Get $get) {
-                    $region   = $get('region');
+                    $region = $get('region');
                     $provincia = $get('provincia');
-                    if (!$region || !$provincia) return [];
+                    if (! $region || ! $provincia) {
+                        return [];
+                    }
                     $comunas = config("comunas.{$region}.{$provincia}", []);
+
                     return array_combine($comunas, $comunas);
                 })
                 ->searchable()
-                ->disabled(fn(Get $get) => !$get('provincia')),
+                ->disabled(fn (Get $get) => ! $get('provincia')),
         ];
     }
 }

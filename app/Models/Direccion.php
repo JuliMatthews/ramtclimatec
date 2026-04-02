@@ -9,18 +9,19 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Direccion extends Model
 {
     protected $table = 'direcciones';
+
     protected $fillable = [
-    'cliente_id',
-    'calle',
-    'numero',
-    'depto',
-    'region',
-    'provincia',
-    'comuna',
-    'ciudad',
-    'referencia',
-    'principal',
-];
+        'cliente_id',
+        'calle',
+        'numero',
+        'depto',
+        'region',
+        'provincia',
+        'comuna',
+        'ciudad',
+        'referencia',
+        'principal',
+    ];
 
     protected $casts = [
         'principal' => 'boolean',
@@ -35,8 +36,9 @@ class Direccion extends Model
     {
         return $this->hasMany(OrdenTrabajo::class);
     }
+
     public function equipos(): HasMany
     {
-    return $this->hasMany(Equipo::class);
+        return $this->hasMany(Equipo::class);
     }
 }

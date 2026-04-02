@@ -13,10 +13,15 @@ use Filament\Tables\Table;
 class MaterialResource extends Resource
 {
     protected static ?string $model = Material::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-cube';
+
     protected static ?string $navigationLabel = 'Materiales';
+
     protected static ?string $modelLabel = 'Material';
+
     protected static ?string $pluralModelLabel = 'Materiales';
+
     protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
@@ -86,9 +91,9 @@ class MaterialResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListMaterials::route('/'),
+            'index' => Pages\ListMaterials::route('/'),
             'create' => Pages\CreateMaterial::route('/create'),
-            'edit'   => Pages\EditMaterial::route('/{record}/edit'),
+            'edit' => Pages\EditMaterial::route('/{record}/edit'),
         ];
     }
 }

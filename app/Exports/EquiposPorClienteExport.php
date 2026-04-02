@@ -4,10 +4,10 @@ namespace App\Exports;
 
 use App\Models\Equipo;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class EquiposPorClienteExport implements FromCollection, WithHeadings, ShouldAutoSize
+class EquiposPorClienteExport implements FromCollection, ShouldAutoSize, WithHeadings
 {
     protected int $clienteId;
 

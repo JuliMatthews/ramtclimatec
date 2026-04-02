@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources\ClienteResource\RelationManagers;
 
+use App\Models\Presupuesto;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use App\Models\Presupuesto;
 
 class PresupuestosRelationManager extends RelationManager
 {
     protected static string $relationship = 'presupuestos';
+
     protected static ?string $title = 'Presupuestos';
 
     public function form(Form $form): Form
@@ -30,9 +31,9 @@ class PresupuestosRelationManager extends RelationManager
             Forms\Components\Select::make('estado')
                 ->label('Estado')
                 ->options([
-                    'pendiente'  => 'Pendiente',
-                    'aprobado'   => 'Aprobado',
-                    'rechazado'  => 'Rechazado',
+                    'pendiente' => 'Pendiente',
+                    'aprobado' => 'Aprobado',
+                    'rechazado' => 'Rechazado',
                 ])
                 ->default('pendiente')
                 ->required(),
@@ -64,7 +65,7 @@ class PresupuestosRelationManager extends RelationManager
                     ->colors([
                         'warning' => 'pendiente',
                         'success' => 'aprobado',
-                        'danger'  => 'rechazado',
+                        'danger' => 'rechazado',
                     ]),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Fecha')
@@ -75,7 +76,7 @@ class PresupuestosRelationManager extends RelationManager
                     ->label('Descargar')
                     ->icon('heroicon-o-arrow-down-tray')
                     ->color('success')
-                    ->url(fn (Presupuesto $record) => asset('storage/' . $record->archivo))
+                    ->url(fn (Presupuesto $record) => asset('storage/'.$record->archivo))
                     ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),

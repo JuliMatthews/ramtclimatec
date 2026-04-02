@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-use App\Models\Ayudante;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class OrdenTrabajo extends Model
 {
     protected $table = 'ordenes_trabajo';
+
     protected $fillable = [
         'cliente_id',
         'direccion_id',
@@ -23,7 +24,7 @@ class OrdenTrabajo extends Model
     ];
 
     protected $casts = [
-        'fecha_inicio'  => 'date',
+        'fecha_inicio' => 'date',
         'fecha_termino' => 'date',
     ];
 
@@ -46,8 +47,16 @@ class OrdenTrabajo extends Model
     {
         return $this->hasMany(OtMaterial::class, 'orden_trabajo_id');
     }
+
     public function ayudantes(): BelongsToMany
     {
-    return $this->belongsToMany(Ayudante::class, 'ot_ayudantes', 'orden_trabajo_id', 'ayudante_id');
+        return $this->belongsToMany(Ayudante::class, 'ot_ayudantes', 'orden_trabajo_id', 'ayudante_id');
+    }
+
+    public function equipos(): BelongsToMany
+    {
+        return $this->belongsToMany(Equipo::class, 'ot_equipo')
+            ->withPivot(['trabajo_realizado', 'estado_final', 'presion_alta', 'presion_baja', 'temperatura_salida', 'amperaje'])
+            ->withTimestamps();
     }
 }

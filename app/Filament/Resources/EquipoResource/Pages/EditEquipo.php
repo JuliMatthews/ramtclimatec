@@ -9,14 +9,17 @@ use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
 
 class EditEquipo extends Page
 {
     protected static string $resource = EquipoResource::class;
+
     protected static string $view = 'filament.pages.edit-equipo';
 
     public ?array $data = [];
+
     public Equipo $record;
 
     public function mount(Equipo $record): void
@@ -38,17 +41,20 @@ class EditEquipo extends Page
                             ->preload()
                             ->required()
                             ->live()
-                            ->afterStateUpdated(fn(Forms\Set $set) => $set('direccion_id', null)),
+                            ->afterStateUpdated(fn (Forms\Set $set) => $set('direccion_id', null)),
                         Forms\Components\Select::make('direccion_id')
                             ->label('Dirección')
                             ->required()
                             ->options(function (Get $get) {
                                 $clienteId = $get('cliente_id');
-                                if (!$clienteId) return [];
+                                if (! $clienteId) {
+                                    return [];
+                                }
+
                                 return Direccion::where('cliente_id', $clienteId)
                                     ->get()
-                                    ->mapWithKeys(fn($d) => [
-                                        $d->id => "{$d->calle} {$d->numero}, {$d->comuna}"
+                                    ->mapWithKeys(fn ($d) => [
+                                        $d->id => "{$d->calle} {$d->numero}, {$d->comuna}",
                                     ]);
                             })
                             ->live()
@@ -88,28 +94,46 @@ class EditEquipo extends Page
                     ])->columns(3),
 
                 Forms\Components\Section::make('Mantención')
-                    ->schema([
-                        Forms\Components\DatePicker::make('ultima_mantencion')->label('Última mantención')->native(false),
-                        Forms\Components\DatePicker::make('proxima_mantencion')->label('Próxima mantención')->native(false),
-                        Forms\Components\Textarea::make('observaciones')->label('Observaciones')->maxLength(500)->columnSpanFull(),
-                    ])->columns(2),
+    ->schema([
+        Forms\Components\DatePicker::make('ultima_mantencion')
+            ->label('Última mantención')
+            ->native(false)
+            ->displayFormat('d/m/Y')
+            ->closeOnDateSelection()
+            ->weekStartsOnMonday(),
+
+        Forms\Components\DatePicker::make('proxima_mantencion')
+            ->label('Próxima mantención (calculada automáticamente)')
+            ->native(false)
+            ->displayFormat('d/m/Y')
+            ->disabled()        // ✅ No editable por el usuario
+            ->dehydrated(false) // ✅ No se incluye en $data al guardar (el booted() lo calcula)
+            ->weekStartsOnMonday(),
+
+        Forms\Components\Textarea::make('observaciones')
+            ->label('Observaciones')
+            ->maxLength(500)
+            ->columnSpanFull(),
+    ])->columns(2),
             ])
             ->statePath('data')
             ->model($this->record);
     }
 
     public function save(): void
-    {
-        $data = $this->form->getState();
-        $this->record->update($data);
+{
+    $data = $this->form->getState();
 
-        \Filament\Notifications\Notification::make()
-            ->title('Equipo actualizado correctamente')
-            ->success()
-            ->send();
+    // ✅ fill()->save() SÍ dispara el booted() y recalcula proxima_mantencion
+    $this->record->fill($data)->save();
 
-        $this->redirect(route('filament.admin.resources.equipos.index'));
-    }
+    Notification::make()
+        ->title('Equipo actualizado correctamente')
+        ->success()
+        ->send();
+
+    $this->redirect(route('filament.admin.resources.equipos.index'));
+}
 
     protected function getFormActions(): array
     {

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ClienteResource\Pages;
+use App\Filament\Resources\ClienteResource\RelationManagers\PresupuestosRelationManager;
 use App\Filament\Traits\TieneUbicacion;
 use App\Models\Cliente;
 use Filament\Forms;
@@ -10,20 +11,21 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use App\Models\Presupuesto;
-use Filament\Infolists;
-use Filament\Tables\Actions\Action;
-use Illuminate\Support\Facades\Storage;
 
 class ClienteResource extends Resource
 {
     use TieneUbicacion;
 
     protected static ?string $model = Cliente::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-users';
+
     protected static ?string $navigationLabel = 'Clientes';
+
     protected static ?string $modelLabel = 'Cliente';
+
     protected static ?string $pluralModelLabel = 'Clientes';
+
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
@@ -77,7 +79,7 @@ class ClienteResource extends Resource
                         ->label('Próxima Mantención')
                         ->nullable()
                         ->displayFormat('d/m/Y')
-                        ->native(false),    
+                        ->native(false),
                 ])->columns(2),
         ]);
     }
@@ -86,9 +88,9 @@ class ClienteResource extends Resource
     {
         return $table
             ->columns([
-                //Tables\Columns\TextColumn::make('rut')
-                    //->label('RUT')
-                    //->searchable(),
+                // Tables\Columns\TextColumn::make('rut')
+                // ->label('RUT')
+                // ->searchable(),
                 Tables\Columns\TextColumn::make('nombre')
                     ->label('Nombre')
                     ->searchable()
@@ -141,18 +143,20 @@ class ClienteResource extends Resource
                 ]),
             ]);
     }
+
     public static function getRelations(): array
-{
-    return [
-        \App\Filament\Resources\ClienteResource\RelationManagers\PresupuestosRelationManager::class,
-    ];
-}
+    {
+        return [
+            PresupuestosRelationManager::class,
+        ];
+    }
+
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListClientes::route('/'),
+            'index' => Pages\ListClientes::route('/'),
             'create' => Pages\CreateCliente::route('/create'),
-            'edit'   => Pages\EditCliente::route('/{record}/edit'),
+            'edit' => Pages\EditCliente::route('/{record}/edit'),
         ];
     }
 }

@@ -24,5 +24,6 @@ Route::get('/export-equipos/{cliente}', function ($clienteId) {
 
 Route::get('/equipo/{equipo}/pdf', function (Equipo $equipo) {
     $pdf = Pdf::loadView('pdf.ficha_equipo', compact('equipo'));
+
     return $pdf->download("ficha_tecnica_{$equipo->ubicacion}.pdf");
 })->name('equipo.pdf')->middleware('auth');

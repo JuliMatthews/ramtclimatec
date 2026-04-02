@@ -7,16 +7,16 @@ use App\Models\Cliente;
 use App\Models\Equipo;
 use Filament\Resources\Pages\Page;
 use Filament\Tables;
-use Filament\Tables\Table;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Table;
 
 class ListEquiposCliente extends Page implements HasTable
 {
     use InteractsWithTable;
 
     protected static string $resource = EquipoResource::class;
+
     protected static string $view = 'filament.pages.list-equipos-cliente';
 
     public Cliente $record;
@@ -28,7 +28,7 @@ class ListEquiposCliente extends Page implements HasTable
 
     public function getTitle(): string
     {
-        return 'Equipos de ' . $this->record->nombre;
+        return 'Equipos de '.$this->record->nombre;
     }
 
     public function table(Table $table): Table
@@ -47,7 +47,7 @@ class ListEquiposCliente extends Page implements HasTable
                     ->searchable(),
                 Tables\Columns\TextColumn::make('capacidad_enfriamiento_btu')
                     ->label('BTU')
-                    ->searchable(),    
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('tipo_refrigerante')
                     ->label('Refrigerante'),
                 Tables\Columns\TextColumn::make('ultima_mantencion')
@@ -67,12 +67,12 @@ class ListEquiposCliente extends Page implements HasTable
                     ->label('Ver Ficha')
                     ->icon('heroicon-o-document-text')
                     ->color('info')
-                    ->url(fn(Equipo $record) => route('filament.admin.resources.equipos.view', $record)),
+                    ->url(fn (Equipo $record) => route('filament.admin.resources.equipos.view', $record)),
                 Tables\Actions\Action::make('edit')
                     ->label('Editar')
                     ->icon('heroicon-o-pencil')
                     ->color('warning')
-                    ->url(fn(Equipo $record) => route('filament.admin.resources.equipos.edit', $record)),
+                    ->url(fn (Equipo $record) => route('filament.admin.resources.equipos.edit', $record)),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->headerActions([

@@ -3,8 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PresupuestoResource\Pages;
-use App\Models\Presupuesto;
 use App\Models\Cliente;
+use App\Models\Presupuesto;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -14,10 +14,15 @@ use Filament\Tables\Table;
 class PresupuestoResource extends Resource
 {
     protected static ?string $model = Presupuesto::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
+
     protected static ?string $navigationLabel = 'Presupuestos';
+
     protected static ?string $modelLabel = 'Presupuesto';
+
     protected static ?string $pluralModelLabel = 'Presupuestos';
+
     protected static ?int $navigationSort = 7;
 
     public static function form(Form $form): Form
@@ -43,9 +48,9 @@ class PresupuestoResource extends Resource
                     Forms\Components\Select::make('estado')
                         ->label('Estado')
                         ->options([
-                            'pendiente'  => 'Pendiente',
-                            'aprobado'   => 'Aprobado',
-                            'rechazado'  => 'Rechazado',
+                            'pendiente' => 'Pendiente',
+                            'aprobado' => 'Aprobado',
+                            'rechazado' => 'Rechazado',
                         ])
                         ->default('pendiente')
                         ->required(),
@@ -83,7 +88,7 @@ class PresupuestoResource extends Resource
                     ->colors([
                         'warning' => 'pendiente',
                         'success' => 'aprobado',
-                        'danger'  => 'rechazado',
+                        'danger' => 'rechazado',
                     ]),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Fecha')
@@ -94,9 +99,9 @@ class PresupuestoResource extends Resource
                 Tables\Filters\SelectFilter::make('estado')
                     ->label('Estado')
                     ->options([
-                        'pendiente'  => 'Pendiente',
-                        'aprobado'   => 'Aprobado',
-                        'rechazado'  => 'Rechazado',
+                        'pendiente' => 'Pendiente',
+                        'aprobado' => 'Aprobado',
+                        'rechazado' => 'Rechazado',
                     ]),
             ])
             ->actions([
@@ -104,7 +109,7 @@ class PresupuestoResource extends Resource
                     ->label('Descargar')
                     ->icon('heroicon-o-arrow-down-tray')
                     ->color('success')
-                    ->url(fn (Presupuesto $record) => asset('storage/' . $record->archivo))
+                    ->url(fn (Presupuesto $record) => asset('storage/'.$record->archivo))
                     ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
@@ -119,9 +124,9 @@ class PresupuestoResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListPresupuestos::route('/'),
+            'index' => Pages\ListPresupuestos::route('/'),
             'create' => Pages\CreatePresupuesto::route('/create'),
-            'edit'   => Pages\EditPresupuesto::route('/{record}/edit'),
+            'edit' => Pages\EditPresupuesto::route('/{record}/edit'),
         ];
     }
 }

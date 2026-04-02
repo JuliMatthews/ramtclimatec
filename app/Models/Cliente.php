@@ -10,18 +10,18 @@ class Cliente extends Model
     protected $table = 'clientes';
 
     protected $fillable = [
-    'rut',
-    'nombre',
-    'tipo',
-    'region',
-    'provincia',
-    'comuna',
-    'email',
-    'telefono',
-    'observaciones',
-    'activo',
-    'proxima_mantencion'
-];
+        'rut',
+        'nombre',
+        'tipo',
+        'region',
+        'provincia',
+        'comuna',
+        'email',
+        'telefono',
+        'observaciones',
+        'activo',
+        'proxima_mantencion',
+    ];
 
     protected $casts = [
         'activo' => 'boolean',
@@ -36,12 +36,14 @@ class Cliente extends Model
     {
         return $this->hasMany(OrdenTrabajo::class);
     }
+
     public function presupuestos()
     {
-    return $this->hasMany(Presupuesto::class, 'cliente_id');
+        return $this->hasMany(Presupuesto::class, 'cliente_id');
     }
+
     public function equipos(): HasMany
     {
-    return $this->hasMany(Equipo::class);
+        return $this->hasMany(Equipo::class);
     }
 }

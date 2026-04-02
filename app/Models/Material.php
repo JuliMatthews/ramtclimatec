@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Material extends Model
 {
     protected $table = 'materiales';
+
     protected $fillable = [
         'nombre',
         'unidad',
@@ -17,7 +18,7 @@ class Material extends Model
     ];
 
     protected $casts = [
-        'activo'          => 'boolean',
+        'activo' => 'boolean',
         'precio_unitario' => 'decimal:2',
     ];
 

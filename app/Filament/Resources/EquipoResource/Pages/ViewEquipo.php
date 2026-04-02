@@ -5,11 +5,11 @@ namespace App\Filament\Resources\EquipoResource\Pages;
 use App\Filament\Resources\EquipoResource;
 use App\Models\Equipo;
 use Filament\Actions\Action;
-use Filament\Resources\Pages\ViewRecord;
-use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Infolist;
+use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Database\Eloquent\Model;
 
 class ViewEquipo extends ViewRecord
@@ -83,5 +83,11 @@ class ViewEquipo extends ViewRecord
                     TextEntry::make('observaciones')->label('Observaciones')->columnSpanFull(),
                 ])->columns(2),
         ]);
+    }
+    public function getRelationManagers(): array
+    {
+        return [
+            EquipoResource\RelationManagers\OrdenesTrabajoRelationManager::class,
+        ];
     }
 }

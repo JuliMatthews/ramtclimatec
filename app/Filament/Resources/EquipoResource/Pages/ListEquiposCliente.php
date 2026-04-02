@@ -19,6 +19,7 @@ class ListEquiposCliente extends Page implements HasTable
     use InteractsWithTable;
 
     protected static string $resource = EquipoResource::class;
+
     protected static string $view = 'filament.pages.list-equipos-cliente';
 
     public Cliente $record;
@@ -30,7 +31,7 @@ class ListEquiposCliente extends Page implements HasTable
 
     public function getTitle(): string
     {
-        return 'Equipos de ' . $this->record->nombre;
+        return 'Equipos de '.$this->record->nombre;
     }
 
     public function table(Table $table): Table
@@ -92,7 +93,7 @@ class ListEquiposCliente extends Page implements HasTable
                         } catch (\Exception $e) {
                             Notification::make()
                                 ->title('Error al exportar')
-                                ->body('Ocurrió un error: ' . $e->getMessage())
+                                ->body('Ocurrió un error: '.$e->getMessage())
                                 ->danger()
                                 ->send();
                         }

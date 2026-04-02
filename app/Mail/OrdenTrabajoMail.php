@@ -6,9 +6,9 @@ use App\Models\OrdenTrabajo;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Queue\SerializesModels;
 
 class OrdenTrabajoMail extends Mailable
@@ -20,7 +20,7 @@ class OrdenTrabajoMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Orden de Trabajo #" . str_pad($this->ot->id, 4, '0', STR_PAD_LEFT) . " - Ramtclimatec",
+            subject: 'Orden de Trabajo #'.str_pad($this->ot->id, 4, '0', STR_PAD_LEFT).' - Ramtclimatec',
         );
     }
 
@@ -41,8 +41,8 @@ class OrdenTrabajoMail extends Mailable
 
         return [
             Attachment::fromData(
-                fn() => $pdf->output(),
-                "OT-" . str_pad($ot->id, 4, '0', STR_PAD_LEFT) . ".pdf"
+                fn () => $pdf->output(),
+                'OT-'.str_pad($ot->id, 4, '0', STR_PAD_LEFT).'.pdf'
             )->withMime('application/pdf'),
         ];
     }

@@ -10,22 +10,23 @@ class Ayudante extends Model
     protected $table = 'ayudantes';
 
     protected $fillable = [
-    'nombre',
-    'rut',
-    'telefono',
-    'email',
-    'region',
-    'provincia',
-    'comuna',
-    'observaciones',
-    'activo',
-];
+        'nombre',
+        'rut',
+        'telefono',
+        'email',
+        'region',
+        'provincia',
+        'comuna',
+        'observaciones',
+        'activo',
+    ];
 
     protected $casts = [
         'activo' => 'boolean',
     ];
+
     public function ordenesTrabajo(): BelongsToMany
-{
-    return $this->belongsToMany(OrdenTrabajo::class, 'ot_ayudantes', 'ayudante_id', 'orden_trabajo_id');
-}
+    {
+        return $this->belongsToMany(OrdenTrabajo::class, 'ot_ayudantes', 'ayudante_id', 'orden_trabajo_id');
+    }
 }

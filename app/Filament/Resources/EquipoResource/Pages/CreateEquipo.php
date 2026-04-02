@@ -5,15 +5,16 @@ namespace App\Filament\Resources\EquipoResource\Pages;
 use App\Filament\Resources\EquipoResource;
 use App\Models\Direccion;
 use App\Models\Equipo;
+use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Resources\Pages\Page;
-use Filament\Actions\Action;
 
 class CreateEquipo extends Page
 {
     protected static string $resource = EquipoResource::class;
+
     protected static string $view = 'filament.pages.create-equipo';
 
     public ?array $data = [];
@@ -36,17 +37,20 @@ class CreateEquipo extends Page
                             ->preload()
                             ->required()
                             ->live()
-                            ->afterStateUpdated(fn(Forms\Set $set) => $set('direccion_id', null)),
+                            ->afterStateUpdated(fn (Forms\Set $set) => $set('direccion_id', null)),
                         Forms\Components\Select::make('direccion_id')
                             ->label('Dirección')
                             ->required()
                             ->options(function (Get $get) {
                                 $clienteId = $get('cliente_id');
-                                if (!$clienteId) return [];
+                                if (! $clienteId) {
+                                    return [];
+                                }
+
                                 return Direccion::where('cliente_id', $clienteId)
                                     ->get()
-                                    ->mapWithKeys(fn($d) => [
-                                        $d->id => "{$d->calle} {$d->numero}, {$d->comuna}"
+                                    ->mapWithKeys(fn ($d) => [
+                                        $d->id => "{$d->calle} {$d->numero}, {$d->comuna}",
                                     ]);
                             })
                             ->live()
