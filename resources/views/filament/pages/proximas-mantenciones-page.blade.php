@@ -21,6 +21,7 @@
                             <th class="px-4 py-3 font-medium">Próxima Mantención</th>
                             <th class="px-4 py-3 font-medium">Días restantes</th>
                             <th class="px-4 py-3 font-medium">Estado</th>
+                            <th class="px-4 py-3 font-medium">Acción</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-white/5">
@@ -73,10 +74,20 @@
                                         {{ $label }}
                                     </span>
                                 </td>
+
+                                <td class="px-4 py-3">
+                                    <a href="{{ route('filament.admin.resources.orden-trabajos.create', [
+                                        'cliente_id' => $cliente->cliente_id,
+                                        'direccion_id' => $cliente->direccion_id,
+                                    ]) }}"
+                                    style="background:#16a34a;color:#fff;padding:5px 12px;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;">
+                                        + Crear OT
+                                    </a>
+                                </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="px-4 py-8 text-center text-gray-400 dark:text-gray-500">
+                                <td colspan="7" class="px-4 py-8 text-center text-gray-400 dark:text-gray-500">
                                     No hay equipos con mantención programada.
                                 </td>
                             </tr>
