@@ -11,7 +11,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 
-class ListEquiposCliente extends Page implements HasTable
+class ListEquiposClientePage extends Page implements HasTable
 {
     use InteractsWithTable;
 
