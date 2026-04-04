@@ -1,7 +1,7 @@
 FROM php:8.3-apache
 
 RUN apt-get update && apt-get install -y \
-    git curl zip unzip libzip-dev libicu-dev libgd-dev libpng-dev \
+    git curl zip unzip libzip-dev libicu-dev libgd-dev libpng-dev nodejs npm \
     && docker-php-ext-install intl zip gd bcmath pdo pdo_mysql opcache
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
