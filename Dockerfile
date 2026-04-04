@@ -19,4 +19,4 @@ RUN mkdir -p storage/framework/{sessions,views,cache,testing} storage/logs boots
 
 EXPOSE 80
 
-CMD bash -c "php artisan config:cache && php artisan view:cache && apache2-foreground"
+CMD bash -c "php artisan config:cache && php artisan view:cache && apachectl -D FOREGROUND"
