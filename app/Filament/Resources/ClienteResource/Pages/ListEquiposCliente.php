@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\EquipoResource\Pages;
+namespace App\Filament\Resources\ClienteResource\Pages;
 
 use App\Filament\Resources\EquipoResource;
 use App\Models\Cliente;
