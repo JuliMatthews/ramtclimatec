@@ -17,8 +17,6 @@ RUN npm install && npm run build
 RUN mkdir -p storage/framework/{sessions,views,cache,testing} storage/logs bootstrap/cache \
     && chmod -R 777 storage bootstrap/cache
 
-RUN php artisan config:cache && php artisan view:cache
-
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+CMD bash -c "php artisan config:cache && php artisan view:cache && apache2-foreground"
