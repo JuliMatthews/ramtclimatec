@@ -1,14 +1,12 @@
-FROM php:8.3-apache
+FROM dunglas/frankenphp:php8.3-bookworm
 
 RUN apt-get update && apt-get install -y \
     git curl zip unzip libzip-dev libicu-dev libgd-dev libpng-dev nodejs npm \
-    && docker-php-ext-install intl zip gd bcmath pdo pdo_mysql opcache \
-    && a2dismod mpm_event mpm_worker 2>/dev/null || true \
-    && a2enmod mpm_prefork rewrite
+    && install-php-extensions intl zip gd bcmath pdo pdo_mysql opcache
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-WORKDIR /var/www/html
+WORKDIR /app
 
 COPY . .
 
@@ -19,6 +17,9 @@ RUN npm install && npm run build
 RUN mkdir -p storage/framework/{sessions,views,cache,testing} storage/logs bootstrap/cache \
     && chmod -R 777 storage bootstrap/cache
 
+ENV SERVER_NAME=":80"
+ENV APP_ENV=production
+
 EXPOSE 80
 
-CMD bash -c "php artisan config:cache && php artisan view:cache && apache2-foreground"
+CMD bash -c "php artisan config:cache && php artisan view:cache && frankenphp run --config /etc/caddy/Caddyfile"
