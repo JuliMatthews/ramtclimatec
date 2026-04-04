@@ -21,7 +21,8 @@ RUN mkdir -p storage/framework/{sessions,views,cache,testing} storage/logs boots
 
 ENV SERVER_NAME=":80"
 ENV APP_ENV=production
+ENV FRANKENPHP_DOCUMENT_ROOT=/app/public
 
 EXPOSE 80
 
-CMD bash -c "php artisan config:cache && php artisan view:cache && frankenphp run --config /etc/caddy/Caddyfile"
+CMD bash -c "php artisan migrate --force && php artisan config:cache && php artisan view:cache && frankenphp run --config /etc/caddy/Caddyfile"
