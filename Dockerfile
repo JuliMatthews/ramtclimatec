@@ -2,7 +2,9 @@ FROM php:8.3-apache
 
 RUN apt-get update && apt-get install -y \
     git curl zip unzip libzip-dev libicu-dev libgd-dev libpng-dev nodejs npm \
-    && docker-php-ext-install intl zip gd bcmath pdo pdo_mysql opcache
+    && docker-php-ext-install intl zip gd bcmath pdo pdo_mysql opcache \
+    && a2dismod mpm_event mpm_worker 2>/dev/null || true \
+    && a2enmod mpm_prefork rewrite
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -19,4 +21,4 @@ RUN mkdir -p storage/framework/{sessions,views,cache,testing} storage/logs boots
 
 EXPOSE 80
 
-CMD bash -c "php artisan config:cache && php artisan view:cache && apachectl -D FOREGROUND"
+CMD bash -c "php artisan config:cache && php artisan view:cache && apache2-foreground"
