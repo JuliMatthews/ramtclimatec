@@ -1,8 +1,10 @@
 FROM dunglas/frankenphp:php8.3-bookworm
 
 RUN apt-get update && apt-get install -y \
-    git curl zip unzip libzip-dev libicu-dev libgd-dev libpng-dev nodejs npm \
-    && install-php-extensions intl zip gd bcmath pdo pdo_mysql opcache
+    git curl zip unzip libzip-dev libicu-dev libgd-dev libpng-dev \
+    && install-php-extensions intl zip gd bcmath pdo pdo_mysql opcache \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
