@@ -25,4 +25,4 @@ ENV FRANKENPHP_DOCUMENT_ROOT=/app/public
 
 EXPOSE 80
 
-CMD bash -c "php artisan migrate --force && php artisan storage:link && php artisan filament:assets && php artisan config:cache && php artisan view:cache && frankenphp run --config /etc/caddy/Caddyfile"
+CMD bash -c "php artisan migrate --force && php artisan storage:link && php artisan filament:upgrade && php artisan filament:assets && php artisan config:cache && php artisan view:cache && frankenphp run --config /etc/caddy/Caddyfile"
