@@ -19,10 +19,13 @@ RUN npm install && npm run build
 RUN mkdir -p storage/framework/{sessions,views,cache,testing} storage/logs bootstrap/cache \
     && chmod -R 777 storage bootstrap/cache
 
+RUN php artisan vendor:publish --tag=filament-assets --force
+RUN php artisan vendor:publish --tag=livewire:assets --force
+
 ENV SERVER_NAME=":80"
 ENV APP_ENV=production
 ENV FRANKENPHP_DOCUMENT_ROOT=/app/public
 
 EXPOSE 80
 
-CMD bash -c "php artisan migrate --force && php artisan storage:link && php artisan filament:upgrade && php artisan filament:assets && php artisan config:cache && php artisan view:cache && frankenphp run --config /etc/caddy/Caddyfile"
+CMD bash -c "php artisan migrate --force && php artisan storage:link && php artisan filament:upgrade && php artisan config:cache && php artisan view:cache && frankenphp run --config /etc/caddy/Caddyfile"
