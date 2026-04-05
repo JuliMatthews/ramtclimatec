@@ -28,4 +28,4 @@ ENV FRANKENPHP_DOCUMENT_ROOT=/app/public
 
 EXPOSE 80
 
-CMD bash -c "php artisan migrate --force && php artisan route:clear && php artisan storage:link && php artisan filament:upgrade && php artisan config:cache && php artisan view:cache && frankenphp php-server --root /app/public"
+CMD bash -c "php artisan migrate --force && php artisan route:clear && php artisan config:clear && php artisan storage:link && php artisan filament:upgrade && php artisan config:cache && php artisan view:cache && frankenphp php-server --root /app/public"
