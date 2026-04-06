@@ -26,58 +26,59 @@ class EquipoResource extends Resource
 
     public static function getRelations(): array
     {
-    return [
-        RelationManagers\OrdenesTrabajoRelationManager::class,
-    ];
+        return [
+            RelationManagers\OrdenesTrabajoRelationManager::class,
+        ];
     }
+
     public static function form(Form $form): Form
     {
         return $form->schema([]);
     }
 
     public static function table(Table $table): Table
-{
-    return $table
-        ->columns([
-            Tables\Columns\TextColumn::make('nombre')
-                ->label('Cliente')
-                ->searchable()
-                ->sortable(),
-            Tables\Columns\BadgeColumn::make('tipo')
-                ->label('Tipo')
-                ->colors([
-                    'primary' => 'persona',
-                    'warning' => 'empresa',
-                ]),
-            Tables\Columns\TextColumn::make('comuna')
-                ->label('Comuna')
-                ->searchable(),
-            Tables\Columns\TextColumn::make('email')
-                ->label('Correo')
-                ->searchable(),
-            Tables\Columns\TextColumn::make('telefono')
-                ->label('Teléfono'),
-            Tables\Columns\TextColumn::make('equipos_count')
-                ->label('Equipos')
-                ->counts('equipos')
-                ->alignCenter()
-                ->sortable(),
-            Tables\Columns\IconColumn::make('activo')
-                ->label('Activo')
-                ->boolean(),
-        ])
-        // ✅ CLICK EN LA FILA -> VA A /{record}/equipos
-        ->recordUrl(fn (Cliente $record) => static::getUrl('cliente', ['record' => $record]))
-        ->actions([
-            Tables\Actions\Action::make('ver_equipos')
-                ->label('Ver Equipos')
-                ->icon('heroicon-o-cpu-chip')
-                ->color('info')
-                ->url(fn (Cliente $record) => route('filament.admin.resources.equipos.cliente', $record)),
-        ])
-        ->filters([])
-        ->bulkActions([]);
-}
+    {
+        return $table
+            ->columns([
+                Tables\Columns\TextColumn::make('nombre')
+                    ->label('Cliente')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\BadgeColumn::make('tipo')
+                    ->label('Tipo')
+                    ->colors([
+                        'primary' => 'persona',
+                        'warning' => 'empresa',
+                    ]),
+                Tables\Columns\TextColumn::make('comuna')
+                    ->label('Comuna')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->label('Correo')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('telefono')
+                    ->label('Teléfono'),
+                Tables\Columns\TextColumn::make('equipos_count')
+                    ->label('Equipos')
+                    ->counts('equipos')
+                    ->alignCenter()
+                    ->sortable(),
+                Tables\Columns\IconColumn::make('activo')
+                    ->label('Activo')
+                    ->boolean(),
+            ])
+            ->recordUrl(fn (Cliente $record) => static::getUrl('cliente', ['record' => $record]))
+            ->actions([
+                Tables\Actions\Action::make('ver_equipos')
+                    ->label('Ver Equipos')
+                    ->icon('heroicon-o-cpu-chip')
+                    ->color('info')
+                    ->url(fn (Cliente $record) => route('filament.admin.resources.equipos.cliente', $record)),
+            ])
+            ->filters([])
+            ->bulkActions([])
+            ->defaultSort('nombre');
+    }
 
     public static function getPages(): array
     {
@@ -88,5 +89,10 @@ class EquipoResource extends Resource
             'create' => Pages\CreateEquipo::route('/create'),
             'edit' => Pages\EditEquipo::route('/{record}/edit'),
         ];
+    }
+
+    public static function getExports(): array
+    {
+        return [];
     }
 }

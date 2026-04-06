@@ -16,4 +16,9 @@ class ListEquipos extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
+    protected function getTableExporters(): array
+    {
+        return [];
+    }
 }

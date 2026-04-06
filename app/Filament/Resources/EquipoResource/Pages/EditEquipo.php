@@ -64,83 +64,82 @@ class EditEquipo extends Page
                             ->placeholder('ej: Oficina 3, Sala reuniones')
                             ->maxLength(255),
                         Forms\Components\Select::make('marca')
-    ->label('Fabricante (Marca)')
-    ->options([
-        'Airwell' => 'Airwell',
-        'Amana' => 'Amana',
-        'Anwo' => 'Anwo',
-        'Ariston' => 'Ariston',
-        'Aux' => 'Aux',
-        'AUX Air' => 'AUX Air',
-        'Baxi' => 'Baxi',
-        'BGH' => 'BGH',
-        'Bryant' => 'Bryant',
-        'Carrier' => 'Carrier',
-        'Chigo' => 'Chigo',
-        'Clark' => 'Clark',
-        'Coleman' => 'Coleman',
-        'Cold Point' => 'Cold Point',
-        'Comfortmaker' => 'Comfortmaker',
-        'Daewoo' => 'Daewoo',
-        'Daikin' => 'Daikin',
-        'Daitsu' => 'Daitsu',
-        'Ecox' => 'Ecox',
-        'Electrolux' => 'Electrolux',
-        'Fagor' => 'Fagor',
-        'Frigidaire' => 'Frigidaire',
-        'Fujitsu' => 'Fujitsu',
-        'Galanz' => 'Galanz',
-        'General Electric (GE Appliances)' => 'General Electric (GE Appliances)',
-        'Goodman' => 'Goodman',
-        'Gree' => 'Gree',
-        'Haier' => 'Haier',
-        'Heil' => 'Heil',
-        'Hisense' => 'Hisense',
-        'Hisense Kelon' => 'Hisense Kelon',
-        'Hitecsa' => 'Hitecsa',
-        'Hitachi' => 'Hitachi',
-        'Hyundai' => 'Hyundai',
-        'Indurama' => 'Indurama',
-        'Junkers' => 'Junkers',
-        'Kelon' => 'Kelon',
-        'Kosner' => 'Kosner',
-        'Lennox' => 'Lennox',
-        'LG' => 'LG',
-        'Mabe' => 'Mabe',
-        'Midea' => 'Midea',
-        'Mirage' => 'Mirage',
-        'Miray' => 'Miray',
-        'Mitsubishi Electric' => 'Mitsubishi Electric',
-        'Mitsubishi Heavy Industries' => 'Mitsubishi Heavy Industries',
-        'Nordyne' => 'Nordyne',
-        'Olimpo' => 'Olimpo',
-        'Panasonic' => 'Panasonic',
-        'Philco' => 'Philco',
-        'Prime' => 'Prime',
-        'Rheem' => 'Rheem',
-        'Ruud' => 'Ruud',
-        'Samsung' => 'Samsung',
-        'Sankey' => 'Sankey',
-        'Sanyo' => 'Sanyo',
-        'Saunier Duval' => 'Saunier Duval',
-        'Sharp' => 'Sharp',
-        'Surrey' => 'Surrey',
-        'TCL' => 'TCL',
-        'Tempstar' => 'Tempstar',
-        'Toshiba' => 'Toshiba',
-        'Trane' => 'Trane',
-        'Vaillant' => 'Vaillant',
-        'Westinghouse' => 'Westinghouse',
-        'Whirlpool' => 'Whirlpool',
-        'York' => 'York',
-    ])
-    ->searchable()
-    ->required(),
+                            ->label('Fabricante (Marca)')
+                            ->options([
+                                'Airwell' => 'Airwell',
+                                'Amana' => 'Amana',
+                                'Anwo' => 'Anwo',
+                                'Ariston' => 'Ariston',
+                                'Aux' => 'Aux',
+                                'AUX Air' => 'AUX Air',
+                                'Baxi' => 'Baxi',
+                                'BGH' => 'BGH',
+                                'Bryant' => 'Bryant',
+                                'Carrier' => 'Carrier',
+                                'Chigo' => 'Chigo',
+                                'Clark' => 'Clark',
+                                'Coleman' => 'Coleman',
+                                'Cold Point' => 'Cold Point',
+                                'Comfortmaker' => 'Comfortmaker',
+                                'Daewoo' => 'Daewoo',
+                                'Daikin' => 'Daikin',
+                                'Daitsu' => 'Daitsu',
+                                'Ecox' => 'Ecox',
+                                'Electrolux' => 'Electrolux',
+                                'Fagor' => 'Fagor',
+                                'Frigidaire' => 'Frigidaire',
+                                'Fujitsu' => 'Fujitsu',
+                                'Galanz' => 'Galanz',
+                                'General Electric (GE Appliances)' => 'General Electric (GE Appliances)',
+                                'Goodman' => 'Goodman',
+                                'Gree' => 'Gree',
+                                'Haier' => 'Haier',
+                                'Heil' => 'Heil',
+                                'Hisense' => 'Hisense',
+                                'Hisense Kelon' => 'Hisense Kelon',
+                                'Hitecsa' => 'Hitecsa',
+                                'Hitachi' => 'Hitachi',
+                                'Hyundai' => 'Hyundai',
+                                'Indurama' => 'Indurama',
+                                'Junkers' => 'Junkers',
+                                'Kelon' => 'Kelon',
+                                'Kosner' => 'Kosner',
+                                'Lennox' => 'Lennox',
+                                'LG' => 'LG',
+                                'Mabe' => 'Mabe',
+                                'Midea' => 'Midea',
+                                'Mirage' => 'Mirage',
+                                'Miray' => 'Miray',
+                                'Mitsubishi Electric' => 'Mitsubishi Electric',
+                                'Mitsubishi Heavy Industries' => 'Mitsubishi Heavy Industries',
+                                'Nordyne' => 'Nordyne',
+                                'Olimpo' => 'Olimpo',
+                                'Panasonic' => 'Panasonic',
+                                'Philco' => 'Philco',
+                                'Prime' => 'Prime',
+                                'Rheem' => 'Rheem',
+                                'Ruud' => 'Ruud',
+                                'Samsung' => 'Samsung',
+                                'Sankey' => 'Sankey',
+                                'Sanyo' => 'Sanyo',
+                                'Saunier Duval' => 'Saunier Duval',
+                                'Sharp' => 'Sharp',
+                                'Surrey' => 'Surrey',
+                                'TCL' => 'TCL',
+                                'Tempstar' => 'Tempstar',
+                                'Toshiba' => 'Toshiba',
+                                'Trane' => 'Trane',
+                                'Vaillant' => 'Vaillant',
+                                'Westinghouse' => 'Westinghouse',
+                                'Whirlpool' => 'Whirlpool',
+                                'York' => 'York',
+                            ])
+                            ->searchable()
+                            ->required(),
                     ])->columns(3),
 
                 Forms\Components\Section::make('Identificación del equipo')
                     ->schema([
-                        Forms\Components\TextInput::make('marca')->label('Fabricante (Marca)')->required()->maxLength(30),
                         Forms\Components\TextInput::make('modelo')->label('Modelo')->maxLength(100),
                         Forms\Components\TextInput::make('numero_serie')->label('N° de serie')->maxLength(100),
                         Forms\Components\TextInput::make('pais_fabricacion')->label('País de fabricación')->maxLength(100),
@@ -167,46 +166,45 @@ class EditEquipo extends Page
                     ])->columns(3),
 
                 Forms\Components\Section::make('Mantención')
-    ->schema([
-        Forms\Components\DatePicker::make('ultima_mantencion')
-            ->label('Última mantención')
-            ->native(false)
-            ->displayFormat('d/m/Y')
-            ->closeOnDateSelection()
-            ->weekStartsOnMonday(),
+                    ->schema([
+                        Forms\Components\DatePicker::make('ultima_mantencion')
+                            ->label('Última mantención')
+                            ->native(false)
+                            ->displayFormat('d/m/Y')
+                            ->closeOnDateSelection()
+                            ->weekStartsOnMonday(),
 
-        Forms\Components\DatePicker::make('proxima_mantencion')
-            ->label('Próxima mantención (calculada automáticamente)')
-            ->native(false)
-            ->displayFormat('d/m/Y')
-            ->disabled()        // ✅ No editable por el usuario
-            ->dehydrated(false) // ✅ No se incluye en $data al guardar (el booted() lo calcula)
-            ->weekStartsOnMonday(),
+                        Forms\Components\DatePicker::make('proxima_mantencion')
+                            ->label('Próxima mantención (calculada automáticamente)')
+                            ->native(false)
+                            ->displayFormat('d/m/Y')
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->weekStartsOnMonday(),
 
-        Forms\Components\Textarea::make('observaciones')
-            ->label('Observaciones')
-            ->maxLength(500)
-            ->columnSpanFull(),
-    ])->columns(2),
+                        Forms\Components\Textarea::make('observaciones')
+                            ->label('Observaciones')
+                            ->maxLength(500)
+                            ->columnSpanFull(),
+                    ])->columns(2),
             ])
             ->statePath('data')
             ->model($this->record);
     }
 
     public function save(): void
-{
-    $data = $this->form->getState();
+    {
+        $data = $this->form->getState();
 
-    // ✅ fill()->save() SÍ dispara el booted() y recalcula proxima_mantencion
-    $this->record->fill($data)->save();
+        $this->record->fill($data)->save();
 
-    Notification::make()
-        ->title('Equipo actualizado correctamente')
-        ->success()
-        ->send();
+        Notification::make()
+            ->title('Equipo actualizado correctamente')
+            ->success()
+            ->send();
 
-    $this->redirect(route('filament.admin.resources.equipos.index'));
-}
+        $this->redirect(route('filament.admin.resources.equipos.index'));
+    }
 
     protected function getFormActions(): array
     {
