@@ -19,6 +19,7 @@ class Direccion extends Model
         'provincia',
         'comuna',
         'ciudad',
+        'telefono',
         'referencia',
         'principal',
     ];
@@ -40,5 +41,17 @@ class Direccion extends Model
     public function equipos(): HasMany
     {
         return $this->hasMany(Equipo::class);
+    }
+
+    public function getDireccionCompletaAttribute(): string
+    {
+        $dir = $this->calle . ' ' . $this->numero;
+        if ($this->depto) {
+            $dir .= ', Depto ' . $this->depto;
+        }
+        if ($this->comuna) {
+            $dir .= ', ' . $this->comuna;
+        }
+        return $dir;
     }
 }

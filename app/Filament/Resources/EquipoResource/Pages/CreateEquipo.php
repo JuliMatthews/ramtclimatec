@@ -100,6 +100,7 @@ class CreateEquipo extends Page
                                 'Junkers' => 'Junkers',
                                 'Kelon' => 'Kelon',
                                 'Kosner' => 'Kosner',
+                                'Khone' => 'Khone',
                                 'Lennox' => 'Lennox',
                                 'LG' => 'LG',
                                 'Mabe' => 'Mabe',
